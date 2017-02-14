@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/add_debtor">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:layout_below="@+id/textView2"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2"
+            android:layout_marginTop="37dp"
+            android:id="@+id/nameT"
+            android:fontFamily="serif"
+            android:layout_alignRight="@+id/textView2"
+            android:layout_alignEnd="@+id/textView2"
+            android:hint="Imię"
+            android:textAlignment="center"
+            android:singleLine="false" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/surnameT"
+            android:layout_below="@+id/nameT"
+            android:layout_alignRight="@+id/nameT"
+            android:layout_alignEnd="@+id/nameT"
+            android:hint="Nazwisko"
+            android:textAlignment="center"
+            android:fontFamily="serif"
+            android:layout_alignLeft="@+id/nameT"
+            android:layout_alignStart="@+id/nameT"
+            android:singleLine="false"
+            android:selectAllOnFocus="false" />
+
+        <Button
+            android:text="Dodaj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bAddDebtorToBase"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="93dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:ems="10"
+            android:id="@+id/debtT"
+            android:layout_below="@+id/surnameT"
+            android:hint="Wysokość długu"
+            android:typeface="serif"
+            android:layout_alignRight="@+id/surnameT"
+            android:layout_alignEnd="@+id/surnameT"
+            android:layout_alignLeft="@+id/surnameT"
+            android:layout_alignStart="@+id/surnameT"
+            android:textAlignment="center" />
+
+        <TextView
+            android:text="Dodaj dłużnika"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:textSize="30sp"
+            android:fontFamily="serif"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="17dp" />
+
+    </RelativeLayout>
+</RelativeLayout>
