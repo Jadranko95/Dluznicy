@@ -37,14 +37,15 @@ public class ShowAll extends ListActivity {
 
         SQLiteDatabase db = openOrCreateDatabase("Debtors.db", Context.MODE_PRIVATE, null);
 
-        Cursor c = db.rawQuery("SELECT name, surname, debt FROM debtors", null);
+        Cursor c = db.rawQuery("SELECT name, surname, debt, datetime FROM debtors", null);
 
         if (c.moveToFirst()){
             do {
                 String name = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_NAME));
                 String surname = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_SURNAME));
                 String debt = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_DEBT));
-                String Name_num = name + " " + surname + ": " + debt + " zł";
+                String date = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_DATE));
+                String Name_num = name + " " + surname + ": " + debt + " zł\n" + "Data: " + date;
                 listItems.add(Name_num);
             } while(c.moveToNext());
 

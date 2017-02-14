@@ -9,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.adrian.dluznicy.DbHelper.FeedReaderContract;
 import com.example.adrian.dluznicy.R;
@@ -47,38 +49,46 @@ public class ShowSelected extends ListActivity {
         listText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                System.out.println("before: " + start + count + after);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                System.out.println("on: " + start + before + count);
                 if (s.toString().equals("")){
                     initList();
                 } else {
+                    searchItem(s.toString());
+                }
+                if (count < before) {
+                    initList();
                     searchItem(s.toString());
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                System.out.println("editable: " + s);
-                if (s.toString().equals("")){
-                    initList();
-                } else {
-                    searchItem(s.toString());
-                }
             }
         });
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Object o = listView.getItemAtPosition(position);
+                        String pen = o.toString();
+                        Toast.makeText(getApplicationContext(), pen, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
+    // show all debrots in ListView
     protected void initList(){
         listItems = new ArrayList<String>();
         listAdapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, listItems);
         listView.setAdapter(listAdapter);
         SQLiteDatabase db = openOrCreateDatabase("Debtors.db", Context.MODE_PRIVATE, null);
-        Cursor c = db.rawQuery("SELECT name, surname, debt FROM debtors", null);
+        Cursor c = db.rawQuery("SELECT DISTINCT name, surname FROM debtors", null);
 
         if (c.moveToFirst()){
             do {
@@ -94,6 +104,7 @@ public class ShowSelected extends ListActivity {
         }
     }
 
+    // search debtor with string "textToSearch"
     public void searchItem(String textToSearch){
         for (Iterator<String> iterator = listItems.iterator(); iterator.hasNext(); ){
             String value = iterator.next();
@@ -111,11 +122,4 @@ public class ShowSelected extends ListActivity {
             finish();
         }
     };
-
-    /*back.setOnClickListener(new View.OnClickListener()  {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    });*/
 }
