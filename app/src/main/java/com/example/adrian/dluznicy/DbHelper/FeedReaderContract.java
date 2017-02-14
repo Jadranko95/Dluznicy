@@ -15,5 +15,6 @@ public final class FeedReaderContract {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_SURNAME = "surname";
         public static final String COLUMN_DEBT = "debt";
+        public static final String COLUMN_DATE = "datetime";
     }
 }
