@@ -2,6 +2,7 @@ package com.example.adrian.dluznicy.Search;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -23,18 +24,19 @@ import com.example.adrian.dluznicy.R;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.adapter;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.editListText;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.listItems;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.listView;
+
 /**
  * Created by Adrian on 14.02.2017.
  */
 
 public class ShowSelected extends ListActivity {
 
-    ArrayList<String> listItems;
-    ArrayAdapter<String> listAdapter;
-    ListView listView;
-    EditText listText;
-
     Button back;
+    String debtor = "";
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -44,9 +46,9 @@ public class ShowSelected extends ListActivity {
         back.setOnClickListener(mBackListener);
 
         listView = (ListView)findViewById(android.R.id.list);
-        listText = (EditText)findViewById(R.id.showSelectedEditText);
+        editListText = (EditText)findViewById(R.id.showSelectedEditText);
         initList();
-        listText.addTextChangedListener(new TextWatcher() {
+        editListText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -74,8 +76,11 @@ public class ShowSelected extends ListActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Object o = listView.getItemAtPosition(position);
-                        String pen = o.toString();
-                        Toast.makeText(getApplicationContext(), pen, Toast.LENGTH_SHORT).show();
+                        debtor = o.toString();
+                        System.out.println(debtor + " " + position + " " + id);
+                        Intent intent = new Intent(ShowSelected.this, DebtorHistory.class);
+                        intent.putExtra("DEBTOR", debtor);
+                        startActivity(intent);
                     }
                 }
         );
@@ -84,9 +89,9 @@ public class ShowSelected extends ListActivity {
     // show all debrots in ListView
     protected void initList(){
         listItems = new ArrayList<String>();
-        listAdapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
                 R.layout.support_simple_spinner_dropdown_item, listItems);
-        listView.setAdapter(listAdapter);
+        listView.setAdapter(adapter);
         SQLiteDatabase db = openOrCreateDatabase("Debtors.db", Context.MODE_PRIVATE, null);
         Cursor c = db.rawQuery("SELECT DISTINCT name, surname FROM debtors", null);
 
@@ -98,7 +103,7 @@ public class ShowSelected extends ListActivity {
                 listItems.add(Name_num);
             } while(c.moveToNext());
 
-            listAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
 
             db.close();
         }
@@ -113,7 +118,7 @@ public class ShowSelected extends ListActivity {
             }
         }
 
-        listAdapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
     }
 
     private View.OnClickListener mBackListener = new View.OnClickListener() {

@@ -18,21 +18,22 @@ import com.example.adrian.dluznicy.R;
 import java.util.ArrayList;
 
 import static android.R.id.list;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.adapter;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.c;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.date;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.db;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.debt;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.listItems;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.listView;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.name;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.nameNum;
+import static com.example.adrian.dluznicy.DbHelper.FeedReaderContract.surname;
 
 /**
  * Created by Adrian on 10.02.2017.
  */
 
 public class ShowAll extends ListActivity {
-
-    private static final String TAG = "MYRECORDER";
-
-    ArrayList<String> listItems;
-    ArrayAdapter<String> adapter;
-    ListView listView;
-    SQLiteDatabase db;
-    Cursor c;
-    String name, surname, debt, date, Name_num;
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -55,8 +56,8 @@ public class ShowAll extends ListActivity {
                 surname = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_SURNAME));
                 debt = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_DEBT));
                 date = c.getString(c.getColumnIndex(FeedReaderContract.FeedEntry.COLUMN_DATE));
-                Name_num = name + " " + surname + ": " + debt + " zł\n" + "Data: " + date;
-                listItems.add(Name_num);
+                nameNum = name + " " + surname + ": " + debt + " zł\n" + "Data: " + date;
+                listItems.add(nameNum);
             } while(c.moveToNext());
 
             adapter.notifyDataSetChanged();
